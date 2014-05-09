@@ -341,7 +341,7 @@ void printFollowTable()
 }
 void DFD()
 {
-      printf("\n\n\t\t DFD Construction\n\n");
+      printf("\n\n\t\t DFA Construction\n\n");
 
       int i , j ;
       printf("\n____________________________________________________________\n");
