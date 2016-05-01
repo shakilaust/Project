@@ -152,7 +152,7 @@ bool update , notok ;
 
 double value_check( string now , double val1 , double val2)
 {
-    printf("here\n");
+    //printf("here\n");
     if( now[0] == '*' ) return val1 * val2 ;
     else if( now[0] == '/' ) return val1 / val2 ;
     else if( now[0] == '+' ) return val1 + val2 ;
@@ -166,17 +166,21 @@ void TreeCheck( Node *root1 , Node *root2 )
     if( notok ) return ;
     if( root1->value != root2->value )
     {
-        if( root2->isOperator ) notok = (root2->value == value_check( root2->iam , root1->rightChild->value , root1->leftChild->value));
-        else notok = 1 ;
-        cout << "root2_value " << root2->value ;
-        cout << " value_check " << value_check( root2->iam , root1->rightChild->value , root1->leftChild->value) << endl ;
+        if( root2->isOperator ) notok = !(root2->value == value_check( root2->iam , root1->rightChild->value , root1->leftChild->value));
+       // cout << "root2_value " << root2->value ;
+        double v1 = root2->value ;
+       // if( root1->isOperator )
+       // cout << " value_check " << value_check( root2->iam , root1->rightChild->value , root1->leftChild->value) << endl ;
+        double v2 ;
+        if( root1->isOperator )
+            v2 = value_check( root2->iam , root1->rightChild->value , root1->leftChild->value);
+       // printf("notok :: %d v1 :: %f v2 :: %f\n" , notok , v1 , v2 );
         return ;
     }
 
     if( root2->leftChild != NULL ) TreeCheck( root1->leftChild , root2->leftChild );
     if( root2->rightChild != NULL ) TreeCheck(root1->rightChild , root2->rightChild);
-    if( root2->leftChild == NULL && root1->leftChild != NULL ) update = 1 ;
-    if( root2->rightChild == NULL && root1->rightChild != NULL ) update = 1 ;
+
 }
 
 
@@ -196,6 +200,7 @@ int main()
     printf(" Now solve it :\n");
     bool successful = 1 , complete = 0;
     int same = 0 ;
+    string prv ;
     while( successful && !complete  )
     {
         getline( cin , Expression );
@@ -207,7 +212,7 @@ int main()
             successful = 0 ;
             break ;
         }
-        if( update == 0 ) same++;
+        if( prv == Expression ) same++;
         else same = 0 ;
         if( same >= 2 )
         {
@@ -223,7 +228,7 @@ int main()
             complete = 1 ;
         }
         root1 = root2 ;
-
+        prv = Expression;
     }
 
     if( successful ) printf("YES you are successfully solved this problem\n");
