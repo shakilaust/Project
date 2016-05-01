@@ -150,13 +150,26 @@ void treeTraverse( Node *now )
 
 bool update , notok ;
 
+double value_check( string now , double val1 , double val2)
+{
+    printf("here\n");
+    if( now[0] == '*' ) return val1 * val2 ;
+    else if( now[0] == '/' ) return val1 / val2 ;
+    else if( now[0] == '+' ) return val1 + val2 ;
+    else if( now[0] == '-' ) return val1 - val2 ;
+    else if( now[0] == '^' ) return pow( val1 , val2 );
+    else return 0 ;
+}
 
 void TreeCheck( Node *root1 , Node *root2 )
 {
     if( notok ) return ;
     if( root1->value != root2->value )
     {
-        notok = 1 ;
+        if( root2->isOperator ) notok = (root2->value == value_check( root2->iam , root1->rightChild->value , root1->leftChild->value));
+        else notok = 1 ;
+        cout << "root2_value " << root2->value ;
+        cout << " value_check " << value_check( root2->iam , root1->rightChild->value , root1->leftChild->value) << endl ;
         return ;
     }
 
