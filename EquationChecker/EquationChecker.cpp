@@ -36,9 +36,11 @@ int Value_of_Operator( char ch)
     else return 5 ; // '^' highest priority
 }
 
-int toInt ( string s )
-{   int r = 0 ;
-    istringstream sin(s); sin>>r;
+double toDouble ( string s )
+{
+    double r = 0 ;
+    istringstream sin(s);
+    sin >> r ;
     return r;
 }
 string ExpressionToPostfixExpression( string inp )
@@ -52,7 +54,7 @@ string ExpressionToPostfixExpression( string inp )
     while( ss >> now )
     {
 
-        if( Operator(now[0]))
+        if( Operator(now[0]) && now.size() == 1 )
         {
             if( now[0] == ')')
             {
@@ -100,7 +102,7 @@ Node *ConvertIntoTree( string expression )
     stack < Node * > st ;
     while( ss >> now )
     {
-        if( Operator( now[0] ) )
+        if( Operator( now[0] ) && now.size() == 1 )
         {
             Node *right = st.top();
             st.pop();
@@ -123,7 +125,7 @@ Node *ConvertIntoTree( string expression )
         else
         {
             head = new Node();
-            head->value = toInt( now );
+            head->value = toDouble( now );
             head->isOperator = 0 ;
             head->iam = now ;
             st.push(head);
@@ -204,7 +206,7 @@ int main()
         exp = ExpressionToPostfixExpression(Expression);
         root2 = ConvertIntoTree( exp );
         TreeCheck( root1 , root2 );
-        if( notok )
+        if( notok || ( root1->value != root2->value ) )
         {
             successful = 0 ;
             break ;
