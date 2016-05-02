@@ -200,20 +200,26 @@ int main()
     printf(" Now solve it :\n");
     bool successful = 1 , complete = 0;
     int same = 0 ;
-    string prv ;
+    string prv = exp ;
+    int successfulline = 0;
     while( successful && !complete  )
     {
         getline( cin , Expression );
         update = 0 , notok = 0 ;
-        root2 = ConvertIntoTree( ExpressionToPostfixExpression(Expression));
+        exp = ExpressionToPostfixExpression(Expression);
+        root2 = ConvertIntoTree( exp );
         TreeCheck( root1 , root2 );
         if( notok )
         {
             successful = 0 ;
             break ;
         }
-        if( prv == Expression ) same++;
-        else same = 0 ;
+        if( prv == exp ) same++;
+        else
+        {
+           same = 0 ;
+           successfulline++;
+        }
         if( same >= 2 )
         {
             printf("What you are doing , typing same same line\n");
@@ -228,10 +234,13 @@ int main()
             complete = 1 ;
         }
         root1 = root2 ;
-        prv = Expression;
+        prv = exp ;
     }
 
-    if( successful ) printf("YES you are successfully solved this problem\n");
+    if( successful ) {
+        if( successfulline < 2 ) printf("What you are doing !!! memorizing answer !!! very bad -_- \n");
+        else printf("Yes Pro!!! you have successfully solved it\n");
+    }
     else printf("Ohh no, you just did something wrong\n");
 
 
