@@ -166,7 +166,9 @@ void TreeCheck( Node *root1 , Node *root2 )
     if( notok ) return ;
     if( root1->value != root2->value )
     {
-        if( root2->isOperator ) notok = !(root2->value == value_check( root2->iam , root1->rightChild->value , root1->leftChild->value));
+      // printf(" now :: value root2->value :: %f root1-Value:: %f\n" , root2->value , root1->value);
+        if( root2->isOperator == true ) notok = !(root2->value == value_check( root2->iam , root1->rightChild->value , root1->leftChild->value));
+        else notok = 1 ;
        // cout << "root2_value " << root2->value ;
         double v1 = root2->value ;
        // if( root1->isOperator )
@@ -186,7 +188,8 @@ void TreeCheck( Node *root1 , Node *root2 )
 
 int main()
 {
-    int n ;
+    int n ; 
+    printf(" Number of Problem do you want to check ? ");
     cin >> n ;
     getchar();
     while( n-- ) {
@@ -222,7 +225,7 @@ int main()
         }
         if( same >= 2 )
         {
-            printf("What you are doing , typing same same line\n");
+            printf("What you are doing !!!! , typing same same line !!!\n");
         }
         if( same >= 5 )
         {
